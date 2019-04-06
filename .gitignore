@@ -3,10 +3,9 @@
 */*.jpg
 */*.png
 *.json
-*.h5
-*.hdf5
 .DS_Store
 */datasets
+*/my_log_dir
 .ipynb_checkpoints/
 
 __pycache__
