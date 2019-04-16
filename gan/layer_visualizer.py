@@ -1,9 +1,4 @@
-
 # coding: utf-8
-
-# In[44]:
-
-
 from keras.datasets import mnist
 from keras.layers import Input, Dense, Reshape, Flatten, Dropout
 from keras.layers import BatchNormalization, Activation, ZeroPadding2D
@@ -16,10 +11,6 @@ from keras import backend as K
 import keras.backend.tensorflow_backend as KTF
 from keras.callbacks import TensorBoard
 
-
-# In[45]:
-
-
 import sys
 import io
 from PIL import Image
@@ -28,10 +19,7 @@ import matplotlib.pyplot as plt
 import random
 
 
-# In[60]:
-
-
-def visualize_layer(model, layer_name):
+def LayerVisualizer(model, layer_name):
     model = model
     margin = 5
     input_size = model.get_layer(layer_name).input_shape[1]
