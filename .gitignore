@@ -1,11 +1,8 @@
-*/images/*.png
-*/images/*.jpg
-*/*.jpg
-*/*.png
-*.json
 .DS_Store
 */datasets
+*/saved_model
 */my_log_dir*
+*/images
 .ipynb_checkpoints/
 
 __pycache__
