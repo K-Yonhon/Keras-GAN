@@ -46,3 +46,19 @@ def L2Norm(y_true, y_pred):
     sqr = K.square(y_pred)
     sqr_sum = K.sum(sqr, axis=np.arange(1, len(sqr.shape)))
     return K.mean(y_true * K.sqrt(sqr_sum))
+
+
+def Log_D(y_true, y_pred):
+    return K.mean(y_true * K.log(y_pred + K.epsilon()))
+
+
+def Log_1_minus_D(y_true, y_pred):
+    return K.mean(y_true * K.log(1 - y_pred + K.epsilon()))
+
+
+def loss_func_dcgan_dis_real(y_true, y_pred):
+    return K.mean(y_true * K.log(1 + K.exp(- y_pred)))
+
+
+def loss_func_dcgan_dis_fake(y_true, y_pred):
+    return K.mean(y_true * K.log(1 + K.exp(y_pred)))
