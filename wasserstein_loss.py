@@ -57,8 +57,13 @@ def Log_1_minus_D(y_true, y_pred):
 
 
 def loss_func_dcgan_dis_real(y_true, y_pred):
-    return K.mean(y_true * K.log(1 + K.exp(- y_pred)))
+    return K.mean(y_true * K.log(1 + K.exp(- y_pred) + K.epsilon()))
 
 
 def loss_func_dcgan_dis_fake(y_true, y_pred):
-    return K.mean(y_true * K.log(1 + K.exp(y_pred)))
+    return K.mean(y_true * K.log(1 + K.exp(y_pred) + K.epsilon()))
+
+
+# cf.Which Training Methods for GANs do actually Converge?
+def CommonVanillaLoss(y_true, y_pred):
+    return K.mean(K.log(1 + K.exp(- y_true * y_pred) + K.epsilon()))
