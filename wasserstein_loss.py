@@ -57,13 +57,41 @@ def Log_1_minus_D(y_true, y_pred):
 
 
 def loss_func_dcgan_dis_real(y_true, y_pred):
-    return K.mean(y_true * K.log(1 + K.exp(- y_pred) + K.epsilon()))
+    return K.mean(y_true * K.log(1 + K.exp(- y_pred)))
 
 
 def loss_func_dcgan_dis_fake(y_true, y_pred):
-    return K.mean(y_true * K.log(1 + K.exp(y_pred) + K.epsilon()))
+    return K.mean(y_true * K.log(1 + K.exp(y_pred)))
 
 
+def BCE(y_true, y_pred):
+    return K.mean(x - x * y_true + K.log(1 + K.exp(- y_pred)))
+
+
+def get_fake_tag(dims, threshold):
+                  
+    prob2 = np.random.rand(34)
+    tags = np.zeros((dims)).astype("f")
+    tags[:] = -1.0
+    tags[np.argmax(prob2[0:13])]=1.0
+    tags[27 + np.argmax(prob2[27:])] = 1.0
+    prob2[prob2<threshold] = -1.0
+    prob2[prob2>=threshold] = 1.0
+    
+    for i in range(13, 27):
+        tags[i] = prob2[i]
+            
+    return tags
+
+
+def get_fake_tag_batch(batchsize, dims, threshold):
+    tags = np.zeros((batchsize, dims)).astype("f")
+    for i in range(batchsize):
+        tags[i] = np.asarray(get_fake_tag(dims, threshold))
+        
+    return tags
+
+                  
 # cf.Which Training Methods for GANs do actually Converge?
 def CommonVanillaLoss(y_true, y_pred):
-    return K.mean(K.log(1 + K.exp(- y_true * y_pred) + K.epsilon()))
+    return K.mean(K.log(1 + K.exp(- y_true * y_pred)))
