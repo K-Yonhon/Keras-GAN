@@ -3,6 +3,7 @@
 
 from keras import backend as K
 import keras
+from keras.activations import softplus
 import numpy as np
 
 
@@ -95,3 +96,14 @@ def get_fake_tag_batch(batchsize, dims, threshold):
 # cf.Which Training Methods for GANs do actually Converge?
 def CommonVanillaLoss(y_true, y_pred):
     return K.mean(K.log(1 + K.exp(- y_true * y_pred)))
+
+
+# https://github.com/jjonak09/DRAGAN-keras/blob/master/DRAGAN/dragan_keras.py
+# loss_real = K.sum(softplus(-dis(dis_real))) / batch_size
+# loss_fake = K.sum(softplus(dis(dis_fake))) / batch_size
+def loss_real(y_true, y_pred):
+    return K.mean(softplus(- y_pred))
+
+
+def loss_fake(y_true, y_pred):
+    return K.mean(softplus(y_pred))
