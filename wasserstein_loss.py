@@ -7,6 +7,7 @@ from keras.activations import softplus
 import numpy as np
 
 
+# Wasserstein GAN
 def WassersteinLoss(y_true, y_pred):
     return K.mean(y_true * y_pred)
 
@@ -23,6 +24,7 @@ def GradientPenaltyLoss(y_true, y_pred,
     return K.mean(gradient_penalty)
 
 
+# Cramer GAN
 def CramerGradientPenaltyLoss(y_true, y_pred, y_pred_2,
                               averaged_samples,
                               gradient_penalty_weight):
@@ -57,6 +59,7 @@ def Log_1_minus_D(y_true, y_pred):
     return K.mean(y_true * K.log(1 - y_pred + K.epsilon()))
 
 
+# DRAGAN
 def loss_func_dcgan_dis_real(y_true, y_pred):
     return K.mean(y_true * K.log(1 + K.exp(- y_pred)))
 
@@ -92,18 +95,23 @@ def get_fake_tag_batch(batchsize, dims, threshold):
         
     return tags
 
-                  
+
+'''  
 # cf.Which Training Methods for GANs do actually Converge?
+# Lock it because they make flicker compared to loss_func_dcgan_dis_real
 def CommonVanillaLoss(y_true, y_pred):
     return K.mean(K.log(1 + K.exp(- y_true * y_pred)))
 
-
-# https://github.com/jjonak09/DRAGAN-keras/blob/master/DRAGAN/dragan_keras.py
-# loss_real = K.sum(softplus(-dis(dis_real))) / batch_size
-# loss_fake = K.sum(softplus(dis(dis_fake))) / batch_size
+# cf.https://github.com/jjonak09/DRAGAN-keras/blob/master/DRAGAN/dragan_keras.py
+# -> Losk them because they don't make converge compared to loss_func_dcgan_dis_real on dragan9 32x32 & make nan also
 def loss_real(y_true, y_pred):
     return K.mean(softplus(- y_pred))
 
 
 def loss_fake(y_true, y_pred):
     return K.mean(softplus(y_pred))
+
+
+def loss_gen(y_true, y_pred):
+    return K.mean(-softplus(y_pred))
+''' 
