@@ -1,8 +1,8 @@
-.DS_Store
-*/datasets
-*/saved_model
-*/my_log_dir*
-*/images
-.ipynb_checkpoints/
-
 __pycache__
+.ipynb_checkpoints/
+/datasets/*
+!/datasets/dataset_maker.ipynb
+saved_model/
+my_log_dir*/
+log_*/
+images/
